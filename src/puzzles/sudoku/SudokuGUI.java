@@ -15,8 +15,11 @@ public class SudokuGUI implements Observer<SudokuModel, String> {
     private static int selectedCol = 0;
     private final SudokuModel model;
 
+    /**
+     * creates the initial board and sets the stage
+     * @param stage     displays board, necessary buttons
+     */
     public SudokuGUI(Stage stage) {
-        // make initial sudoku board and set stage
         this.stage = stage;
         this.model = new SudokuModel();
         this.model.addObserver(this);
@@ -29,9 +32,14 @@ public class SudokuGUI implements Observer<SudokuModel, String> {
         stage.show();
     }
 
+    /**
+     * fills in the center of the stage with a grid pane representing
+     * the main sudoku grid with squares corresponding to values in
+     * the model
+     * @param bp    the border pane for the scene that will be displayed
+     */
     public void center(BorderPane bp) {
         GridPane grid = new GridPane();
-        // rows/cols to set in gp, where to put lines
         int row = 0, col = 0, rowLine = 0, colLine = 0;
         for(int i = 0; i < 9; i++) {
             if(rowLine == 3) {
@@ -65,8 +73,12 @@ public class SudokuGUI implements Observer<SudokuModel, String> {
         bp.setCenter(grid);
     }
 
+    /**
+     * fills in the right side of the border pane with the buttons used to fill
+     * the grid with the numbers 1 through 9
+     * @param bp    the border pane for the scene that will be displayed
+     */
     public void right(BorderPane bp) {
-        // buttons to fill in grid
         GridPane grid = new GridPane();
         int num = 1;
         for(int i = 0; i < 3; i++) {
@@ -81,24 +93,32 @@ public class SudokuGUI implements Observer<SudokuModel, String> {
         bp.setRight(grid);
     }
 
+    /**
+     * fills in the bottom of the border pane with the buttons used to solve or
+     * reset the puzzle
+     * @param bp    the border pane for the scene that will be displayed
+     */
     public void bottom(BorderPane bp) {
-        // buttons to reset or solve
         Button reset = new Button("Reset Puzzle");
         Button solve = new Button("Solve Puzzle");
-        // set actions with functions from model
         reset.setOnAction(event -> this.model.reset());
         solve.setOnAction(event -> this.model.solve());
         FlowPane fp = new FlowPane(reset, solve);
         bp.setBottom(fp);
     }
 
+    /**
+     * displays a scene with the updated grid and a message on the
+     * top of the screen about the action that triggered this update
+     * @param model     the current state of the model
+     * @param str       a message to display on the screen
+     */
     @Override
     public void update(SudokuModel model, String str) {
         BorderPane bp = new BorderPane();
         center(bp);
         bottom(bp);
         right(bp);
-        // set top with "str" message label
         bp.setTop(new Label(str));
         Scene scene = new Scene(bp);
         stage.setScene(scene);

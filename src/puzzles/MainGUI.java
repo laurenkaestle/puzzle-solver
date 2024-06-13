@@ -19,6 +19,12 @@ public class MainGUI extends Application {
         launch(args);
     }
 
+    /**
+     * Show the initial scene on the stage, which will allow the user to choose
+     * between puzzles to solve (once multiple solvers have been implemented)
+     * @param stage     the primary stage for this application, onto which
+     *                  the application scene can be set
+     */
     @Override
     public void start(Stage stage) {
         this.stage = stage;
