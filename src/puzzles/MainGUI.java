@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+import puzzles.kakuro.KakuroGUI;
 import puzzles.sudoku.SudokuGUI;
 
 public class MainGUI extends Application {
@@ -21,7 +22,7 @@ public class MainGUI extends Application {
 
     /**
      * Show the initial scene on the stage, which will allow the user to choose
-     * between puzzles to solve (once multiple solvers have been implemented)
+     * between puzzles to solve (currently sudoku and kakuro)
      * @param stage     the primary stage for this application, onto which
      *                  the application scene can be set
      */
@@ -33,6 +34,7 @@ public class MainGUI extends Application {
         Button sudoku = new Button("Sudoku");
         Button kakuro = new Button("Kakuro");
         sudoku.setOnAction(event -> new SudokuGUI(this.stage));
+        kakuro.setOnAction(event -> new KakuroGUI(this.stage));
         FlowPane buttons = new FlowPane(sudoku, kakuro);
         buttons.setAlignment(Pos.CENTER);
         buttons.setHgap(5);

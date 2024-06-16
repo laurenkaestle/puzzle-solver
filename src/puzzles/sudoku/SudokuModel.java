@@ -114,7 +114,7 @@ public class SudokuModel {
                 return;
             }
             currentGrid[row][col] = i;
-            if(checkRow(row, col) && checkCol(row, col) && checkSquare(row, col)) {
+            if(checkRow(row) && checkCol(col) && checkSquare(row, col)) {
                 if (col == 8) {
                     backtrack(row + 1, 0);
                 } else {
@@ -136,20 +136,18 @@ public class SudokuModel {
      *              false otherwise
      */
     private boolean checkSquare(int row, int col) {
-        // true if square has one of each num
         int[] nums = new int[9];
         int r, c;
         int rOffset = row / 3;
         int cOffset = col / 3;
-        int rLevel = row % 3;
-        int cLevel = col % 3;
-        int endSquare = (rLevel * 3) + cLevel;
-        for(int i = 0; i < endSquare; i++) {
+        for(int i = 0; i < 9; i++) {
             r = (rOffset * 3) + (i / 3);
             c = (cOffset * 3) + (i % 3);
-            nums[currentGrid[r][c] - 1]++;
-            if(nums[currentGrid[r][c] - 1] > 1) {
-                return false;
+            if(currentGrid[r][c] != 0) {
+                nums[currentGrid[r][c] - 1]++;
+                if(nums[currentGrid[r][c] - 1] > 1) {
+                    return false;
+                }
             }
         }
         return true;
@@ -158,37 +156,37 @@ public class SudokuModel {
     /**
      * checks the values in the current square's row for repeats
      * @param row   the row of the current square
-     * @param col   the column of the current square
      * @return      true if the row is legal (has at most one of each number),
      *              false otherwise
      */
-    private boolean checkRow(int row, int col) {
+    private boolean checkRow(int row) {
         int[] nums = new int[9];
-        while(col >= 0) {
-            nums[this.currentGrid[row][col] - 1]++;
-            if(nums[this.currentGrid[row][col] - 1] > 1) {
-                return false;
+        for(int i = 0; i < 9; i++) {
+            if(currentGrid[row][i] != 0) {
+                nums[currentGrid[row][i] - 1]++;
+                if(nums[currentGrid[row][i] - 1] > 1) {
+                    return false;
+                }
             }
-            col--;
         }
         return true;
     }
 
     /**
      * checks the values in the current square's column for repeats
-     * @param row   the row of the current square
      * @param col   the column of the current square
      * @return      true if the column is legal (has at most one of each number),
      *              false otherwise
      */
-    private boolean checkCol(int row, int col) {
+    private boolean checkCol(int col) {
         int[] nums = new int[9];
-        while(row >= 0) {
-            nums[this.currentGrid[row][col] - 1]++;
-            if(nums[this.currentGrid[row][col] - 1] > 1) {
-                return false;
+        for(int i = 0; i < 9; i++) {
+            if(this.currentGrid[i][col] != 0) {
+                nums[currentGrid[i][col] - 1]++;
+                if(nums[currentGrid[i][col] - 1] > 1) {
+                    return false;
+                }
             }
-            row--;
         }
         return true;
     }
