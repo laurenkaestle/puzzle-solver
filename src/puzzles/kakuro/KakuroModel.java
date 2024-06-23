@@ -32,5 +32,4 @@ public class KakuroModel {
         this.gameState = MainGUI.GameState.EDITING;
     }
 
-
 }
